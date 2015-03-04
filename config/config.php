@@ -10,8 +10,8 @@
 	class Config{
 		public static $messages = array(
 									   'MAIL' => array(
-													   'MAIL_SUCCESS' => 'Sorry, the email can not be sent.',
-													   'MAIL_FAIL'	  => 'Email has been sent successfully.'
+													   'MAIL_SUCCESS' => 'Email has been sent successfully.',
+													   'MAIL_FAIL'	  => 'Sorry, the email can not be sent.'
 												 )
 									   );
 		public static $config   = array(
