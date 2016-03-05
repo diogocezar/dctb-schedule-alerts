@@ -4,7 +4,7 @@
 	* 	Data
 	* 	Class to storage alerts of dates
 	* 	Author: Diogo Cezar Teixeira Batista
-	*	Year: 2014 
+	*	Year: 2016
 	*/
 
 	class Data{

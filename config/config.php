@@ -4,7 +4,7 @@
 	* 	Config
 	* 	Class to centralize all configurations of project
 	* 	Author: Diogo Cezar Teixeira Batista
-	*	Year: 2014 
+	*	Year: 2016
 	*/
 
 	class Config{
@@ -16,11 +16,14 @@
 									   );
 		public static $config   = array(
 									   'MAIL' => array(
+									   				   'MAIL_TYPE'          => 'sendgrid',
+									   				   'MAIL_SENDGRID_KEY'  => '',
 													   'MAIL_MANDRILL_KEY' 	=> '',
-													   'MAIL_TO'			=> '',
-													   'MAIL_TO_NAME'		=> '',
+													   'MAIL_TO'			=> array('email1@server.com' => 'name1', 'email2@server.com' => 'name2' ),
+													   'MAIL_TO_NAME'       => 'name1',
 													   'MAIL_TITLE'			=> 'Daily Aelert',
-													   'MAIL_SUBJECT'		=> 'Daily Aelert'
+													   'MAIL_SUBJECT'		=> 'Daily Aelert',
+													   'MAIL_FROM'          => 'email1@server.com'
 												 )
 									    );
 	}

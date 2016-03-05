@@ -64,8 +64,10 @@ class ScheduleAlerts{
 		$optional_mail_subject      = !empty($_POST['optional_mail_subject'])      ? $_POST['optional_mail_subject']      : Config::$config['MAIL']['MAIL_SUBJECT'];
 		$optional_mail_title        = !empty($_POST['optional_mail_title'])        ? $_POST['optional_mail_title']        : Config::$config['MAIL']['MAIL_TITLE'];
 		$optional_mail_to           = !empty($_POST['optional_mail_to'])           ? $_POST['optional_mail_to']           : Config::$config['MAIL']['MAIL_TO'];
+		$optional_mail_from         = !empty($_POST['optional_mail_from'])         ? $_POST['optional_mail_from']         : Config::$config['MAIL']['MAIL_FROM'];
 		$optional_mail_to_name      = !empty($_POST['optional_mail_to_name'])      ? $_POST['optional_mail_to_name']      : Config::$config['MAIL']['MAIL_TO_NAME'];
 		$optional_mail_mandrill_key = !empty($_POST['optional_mail_mandrill_key']) ? $_POST['optional_mail_mandrill_key'] : Config::$config['MAIL']['MAIL_MANDRILL_KEY'];
+		$optional_mail_sendgrid_key = !empty($_POST['optional_mail_sendgrid_key']) ? $_POST['optional_mail_sendgrid_key'] : Config::$config['MAIL']['MAIL_SENDGRID_KEY'];
 
 		$content  = "";
 
@@ -84,36 +86,52 @@ class ScheduleAlerts{
 			$content .= "</body>";
 		$content .= "</html>";
 
-		try {
+		$emails = $optional_mail_to;
+		$type   = Config::$config['MAIL']['MAIL_TYPE'];
 
-			$mandrill = new Mandrill($optional_mail_mandrill_key);
-			$message  = array(
-    					'html' 		 => $content,
-    					'subject' 	 => $optional_mail_subject,
-    					'from_email' => $optional_mail_to,
-    					'from_name'  => $optional_mail_to_name,
-    					'headers' 	 => array('Reply-To' => $optional_mail_to),
-    					'to' 		 => array(
-									 	   array(
-									            'email' => $optional_mail_to,
-									            'name' 	=> $optional_mail_to_name,
-									            'type' 	=> 'to'
-									            )
-    										)
-						);
-
-	    	$async 	= false;
-	    	$result = $mandrill->messages->send($message, $async);
-
-	    	if($result[0]['status'] == 'sent'){
-	    		echo Config::$messages['MAIL']['MAIL_SUCCESS'];
-	    	}
-		}
-		catch(Mandrill_Error $e) {
-	    	echo Config::$messages['MAIL']['MAIL_FAIL'];
+		switch($type){
+			case 'mandrill' : 
+				try {
+					$mandrill = new Mandrill($optional_mail_mandrill_key);
+					foreach ($emails as $key => $value) {
+						$list_to_send[] = array('email' => $value, 'type' => 'to');
+					}
+					$message  = array(
+								'html' 		 => $content,
+								'subject' 	 => $optional_mail_subject,
+								'from_email' => $optional_mail_from,
+								'from_name'  => $optional_mail_to_name,
+								'headers' 	 => array('Reply-To' => $optional_mail_to),
+								'to' 		 => $list_to_send
+								);
+					$async 	= false;
+					$result = $mandrill->messages->send($message, $async);
+					if($result[0]['status'] == 'sent'){
+						echo Config::$messages['MAIL']['MAIL_SUCCESS'];
+					}
+				}
+				catch(Mandrill_Error $e) {
+					echo Config::$messages['MAIL']['MAIL_FAIL'];
+				}
+			break;
+			case 'sendgrid' :
+				$sendgrid = new SendGrid($optional_mail_sendgrid_key);
+				$mail     = new SendGrid\Email();
+				foreach ($emails as $email => $name) {
+					$mail->addTo($email);
+				}
+				$mail->setFrom($optional_mail_from)
+					 ->setSubject($optional_mail_subject)
+					 ->setHtml($content);
+				try {
+					$sendgrid->send($mail);
+					echo Config::$messages['MAIL']['MAIL_SUCCESS'];
+				}
+				catch(\SendGrid\Exception $e) {
+					echo Config::$messages['MAIL']['MAIL_FAIL'];
+				}
+			break;
 		}
 	}//sendMail
-
 }//ScheduleAlert
-
 ?>
