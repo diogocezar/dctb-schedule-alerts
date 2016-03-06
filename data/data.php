@@ -9,11 +9,8 @@
 
 	class Data{
 		public static $alerts = array(
-									   '08' => 	array(
-														'Conta a Pagar' => 'Internet Copel - Dia 10',
-												),
-									   '19' => 	array(
-													   	'Pagameto do Cartão' => 'Pagamento do Cartão de Crédito'
+									   '01' => 	array(
+														'Title' => 'Description',
 												)
 									);
 	}
