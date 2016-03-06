@@ -9,12 +9,14 @@
 
 	class Data{
 		public static $alerts = array(
-									   '01' => 	array(
-													   	'Subject to Send' => 'Content to Send'
+									   '06' => 	array(
+														'Teste' => 'Teste',
 												),
-									   '02' => 	array(
-													   	'Subject to Send 01' => 'Content to Send',
-														'Subject to Send 02' => 'Content to Send',
+									   '08' => 	array(
+														'Conta a Pagar' => 'Internet Copel - Dia 10',
+												),
+									   '19' => 	array(
+													   	'Pagameto do Cartão' => 'Pagamento do Cartão de Crédito'
 												)
 									);
 	}

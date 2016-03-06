@@ -47,8 +47,10 @@ class ScheduleAlerts{
 	*/
 
 	public function SendAlerts(){
+		echo "teste";
 		$alerts = Data::$alerts;
 		foreach ($alerts as $key => $value) {
+			echo date('d');
 			$today = date('d');
 			if($today == $key){
 				$this->SendMail($value);
@@ -60,7 +62,6 @@ class ScheduleAlerts{
 	* Send an email with Mandrill API
 	*/
 	public function SendMail($array_alerts){
-
 		$optional_mail_subject      = !empty($_POST['optional_mail_subject'])      ? $_POST['optional_mail_subject']      : Config::$config['MAIL']['MAIL_SUBJECT'];
 		$optional_mail_title        = !empty($_POST['optional_mail_title'])        ? $_POST['optional_mail_title']        : Config::$config['MAIL']['MAIL_TITLE'];
 		$optional_mail_to           = !empty($_POST['optional_mail_to'])           ? $_POST['optional_mail_to']           : Config::$config['MAIL']['MAIL_TO'];
@@ -88,7 +89,7 @@ class ScheduleAlerts{
 
 		$emails = $optional_mail_to;
 		$type   = Config::$config['MAIL']['MAIL_TYPE'];
-
+		echo "passou";
 		switch($type){
 			case 'mandrill' : 
 				try {
