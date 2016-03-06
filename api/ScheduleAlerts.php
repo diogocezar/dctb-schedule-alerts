@@ -47,10 +47,8 @@ class ScheduleAlerts{
 	*/
 
 	public function SendAlerts(){
-		echo "teste";
 		$alerts = Data::$alerts;
 		foreach ($alerts as $key => $value) {
-			echo date('d');
 			$today = date('d');
 			if($today == $key){
 				$this->SendMail($value);
@@ -89,7 +87,6 @@ class ScheduleAlerts{
 
 		$emails = $optional_mail_to;
 		$type   = Config::$config['MAIL']['MAIL_TYPE'];
-		echo "passou";
 		switch($type){
 			case 'mandrill' : 
 				try {

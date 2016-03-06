@@ -9,9 +9,6 @@
 
 	class Data{
 		public static $alerts = array(
-									   '06' => 	array(
-														'Teste' => 'Teste',
-												),
 									   '08' => 	array(
 														'Conta a Pagar' => 'Internet Copel - Dia 10',
 												),
