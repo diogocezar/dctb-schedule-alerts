@@ -17,13 +17,13 @@
 		public static $config   = array(
 									   'MAIL' => array(
 									   				   'MAIL_TYPE'          => 'sendgrid',
-									   				   'MAIL_SENDGRID_KEY'  => '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',
-													   'MAIL_MANDRILL_KEY' 	=> 'RbFB5br4ZITKzG8E65pEPQ',
-													   'MAIL_TO'			=> array('xgordo@gmail.com' => 'Diogo Cezar'),
-													   'MAIL_TO_NAME'       => 'DCBuster Server',
-													   'MAIL_TITLE'			=> 'DCBuster Server - Daily Aelert',
-													   'MAIL_SUBJECT'		=> 'DCBuster Server - Daily Aelert',
-													   'MAIL_FROM'          => 'xgordo@gmail.com'
+									   				   'MAIL_SENDGRID_KEY'  => '',
+													   'MAIL_MANDRILL_KEY' 	=> '',
+													   'MAIL_TO'		=> array('email@server.com' => 'Name'),
+													   'MAIL_TO_NAME'       => '',
+													   'MAIL_TITLE'		=> '',
+													   'MAIL_SUBJECT'	=> '',
+													   'MAIL_FROM'          => ''
 												 )
 									    );
 	}
