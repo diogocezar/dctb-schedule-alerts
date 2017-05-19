@@ -3,7 +3,7 @@
 	* 	ScheduleAlerts
 	* 	Class to integrate all componentes of composer and give to literal-object all server-side informations required.
 	* 	Author: Diogo Cezar Teixeira Batista
-	*	Year: 2014 
+	*	Year: 2014
 	*/
 
 class ScheduleAlerts{
@@ -68,27 +68,27 @@ class ScheduleAlerts{
 		$optional_mail_mandrill_key = !empty($_POST['optional_mail_mandrill_key']) ? $_POST['optional_mail_mandrill_key'] : Config::$config['MAIL']['MAIL_MANDRILL_KEY'];
 		$optional_mail_sendgrid_key = !empty($_POST['optional_mail_sendgrid_key']) ? $_POST['optional_mail_sendgrid_key'] : Config::$config['MAIL']['MAIL_SENDGRID_KEY'];
 
-		$content  = "";
+		$optional_mail_title = $optional_mail_subject = "🕒 ALERTA DIÁRIO 🕒 [" . date('d/m/Y') . "] ▪ diogocezar.com";
 
-		$content .= "<html>";
-			$content .= "<head>";
-				$content .= "<meta charset=\"UTF-8\">";
-			$content .= "</head>";
-			$content .= "<body>";
-				$content .= "<h1>".$optional_mail_title."</h1>";
-				$content .= "<h2>".date('d/m/Y - H:i:s')."</h2>";
-				foreach ($array_alerts as $key => $value) {
-					$content .= "<h3>".$key."</h3>";
-					$content .= "<p>".$value."</p>";
-					$content .= "<hr>";
-				}
-			$content .= "</body>";
-		$content .= "</html>";
+		$content = '<!DOCTYPE html><html lang="pt-br"><head><meta charset="utf-8"/></head><body><table cellspacing="0" cellpadding="0" width="700" align="center" bgcolor="#fff" border="0"><tr><td bgcolor="#000" align="center"><img style="margin-top:20px;margin-bottom:15px;width:200px;height:200px" src="http://www.diogocezar.com/images/logo.jpg"/></td></tr><tr><td align="center" style="padding: 10px 30px"><h3 style="margin-top:40px;font-size:16px;font-family: Verdana, Geneva, sans-serif;color:#000;font-weight:normal;">Olá, este email é um <strong>Lembrete Diário</strong></h3><h4 style="margin-top:20px;font-size:14px;font-family: Verdana, Geneva, sans-serif;color:#000;font-weight:normal;">Lembretes para: <strong>{date}</strong></h4></td></tr><tr><td align="center"><table width="100%" style="padding: 10px 30px; margin-bottom: 40px" cellspacing="0" cellpadding="0"><tr><td width="35%" style="padding: 10px; border-bottom:1px solid #e6e9ea; border-top:1px solid #e6e9ea; border-right:1px solid #e6e9ea; text-align: center; font-size:12px;font-family: Verdana, Geneva, sans-serif;color:#000;font-weight:bold; text-transform: uppercase;">Nome</td><td width="65%" style="padding: 10px; border-bottom:1px solid #e6e9ea; border-top:1px solid #e6e9ea; text-align: center; font-size:12px;font-family: Verdana, Geneva, sans-serif;color:#000;font-weight:bold; text-transform: uppercase;">Instrução</td></tr>{replaces}</table></td></tr><tr><td align="center" bgcolor="#000"><h3 style="font-family: Verdana, Geneva, sans-serif;color:#fff;font-weight:normal; font-size:12px;margin-top:10px;margin-bottom:10px">Esta é uma mensagem automática, por favor não responda.</h3></td></tr></table></body></html>';
+
+		$replaces = "";
+
+		foreach ($array_alerts as $key => $value){
+			$replaces .= '<tr>';
+			$replaces .= '<td style="padding: 10px; border-right:1px solid #e6e9ea; border-bottom:1px solid #e6e9ea; text-align: center; font-size:12px;font-family: Verdana, Geneva, sans-serif;color:#000;font-weight:normal; text-transform: uppercase;">'.$key.'</td>';
+			$replaces .= '<td style="padding: 10px; border-bottom:1px solid #e6e9ea; text-align: center; font-size:12px;font-family: Verdana, Geneva, sans-serif;color:#000;font-weight:normal;">'.$value.'</td>';
+			$replaces .= '</tr>';
+		}
+
+		$content = str_replace('{title}', $optional_mail_title, $content);
+		$content = str_replace('{date}', date('d/m/Y'), $content);
+		$content = str_replace('{replaces}', $replaces, $content);
 
 		$emails = $optional_mail_to;
 		$type   = Config::$config['MAIL']['MAIL_TYPE'];
 		switch($type){
-			case 'mandrill' : 
+			case 'mandrill' :
 				try {
 					$mandrill = new Mandrill($optional_mail_mandrill_key);
 					foreach ($emails as $key => $value) {

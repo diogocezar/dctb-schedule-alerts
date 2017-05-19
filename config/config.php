@@ -19,10 +19,10 @@
 									   				   'MAIL_TYPE'          => 'sendgrid',
 									   				   'MAIL_SENDGRID_KEY'  => '',
 													   'MAIL_MANDRILL_KEY' 	=> '',
-													   'MAIL_TO'		=> array('email@server.com' => 'Name'),
+													   'MAIL_TO'		    => array('email@server.com' => 'Name'),
 													   'MAIL_TO_NAME'       => '',
-													   'MAIL_TITLE'		=> '',
-													   'MAIL_SUBJECT'	=> '',
+													   'MAIL_TITLE'		    => '',
+													   'MAIL_SUBJECT'	    => '',
 													   'MAIL_FROM'          => ''
 												 )
 									    );
